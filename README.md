@@ -62,62 +62,65 @@ To use the compiler, you need to have the directory of the executable in your PA
 
 On Unix systems, you can inspect and append to the variable like this:
 
-echo $PATH
-export PATH=$PATH:/path/to/executable/directory
+    echo $PATH
+    export PATH=$PATH:/path/to/executable/directory
 
 On Windows
 
-echo %PATH%
-PATH=%PATH%;C:\Path\to\Executable\Directory\
+    echo %PATH%
+    PATH=%PATH%;C:\Path\to\Executable\Directory\
 
 The environmental variable is reset once you open a new prompt. You can avoid redoing this by writing a script, but I will not cover that unless you request it.
 
 BASIC COMPILING
 ---------------
 
-Given that you are in a directory with a 'main.c' source file, and the name of the executable file for your compiler is 'cc', type
+Given that you are in a directory with a `main.c` source file, and the name of the executable file for your compiler is `cc`, type
 
-cc main.c
+   cc main.c
 
-and it should produce an 'a.out' executable file on Unix, or maybe a.exe when on Windows [ ? ]. On Unix systems this file can be executed with
+and it should produce an `a.out` executable file on Unix, or maybe `a.exe` when on Windows [ ? ]. On Unix systems this file can be executed with
 
-./a.out
+    ./a.out
 
-On Windows the file needs the .exe extension to be executed, and you can then type
+On Windows the file needs the `.exe` extension to be executed, and you can then type
 
-a.exe
+    a.exe
 
-The output filename can be changed with the -o option. Like so
+The output filename can be changed with the `-o` option. Like so
 
-cc -o prog.exe main.c
+    cc -o prog.exe main.c
 
-which should produce a 'prog.exe' file.
+which should produce a `prog.exe` file.
 
 When compiling multiple source files which collectively only have one main function, you can either add more source files to the previous command, or break down the compiling into multiple steps, like so
 
-cc -c main.c
-cc -c lib.c
-cc -o prog main.o lib.o
+    cc -c main.c
+    cc -c lib.c
+    cc -o prog main.o lib.o
 
-This is often done by tools that automate the compilation steps so to reduce the time needed to recompile the code after minor changes. If lib.c is changed, then step 2 and 3 need to be redone, but not step 1.
+(The lib.c file typically has a corresponding `lib.h` header file which is `#include`ed in `main.c`)
+
+This is often done by tools that automate the compilation steps so to reduce the time needed to recompile the code after minor changes. If `lib.c` is changed, then step 2 and 3 need to be redone, but not step 1.
 
 MAKE
 ----
 
 `make` is a family of command-line programs that help you automate compilation. Typically you write a file called `Makefile`, and when you then run `make` (or `nmake` if you use the Windows SDK) in that directory it does everything needed to (re)compile the codebase. The Makefile for the previous 3 steps could be written as
 
-prog: main.o lib.o
-	$(CC) -o prog main.o lib.o
+    prog: main.o lib.o
+    	$(CC) -o prog main.o lib.o
 
-main.o: main.c
-	$(CC) -c main.c
+    main.o: main.c
+    	$(CC) -c main.c
 
-lib.o: lib.c
-	$(CC) -c lib.c
+    lib.o: lib.c
+    	$(CC) -c lib.c
 
+Each of these three directives tell that to make this file (`prog`) I need these files (`main.o`, `lib.o`) and will produce it by doing the following (`$(CC) -o prog main.o lib.o`).
 
 $(CC) is here a variable that should point to the default C compiler of the system. If it doesn't work you can run make like this
 
-make CC=cc
+    make CC=cc
 
 where `cc` is the compiler you want to use.
