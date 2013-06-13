@@ -47,7 +47,7 @@ will be of most interest:
 
   http://mingw.org/
 
-* Visual Studio and Windows SDK includes a C compiler. It is often
+* Visual Studio and Windows SDK includes a C compiler called `cl`. It is often
   criticized for not complying with modern standards. C codebases will
   often have to make adjustments to be able to be compiled in Visual
   Studio. Microsoft's support for C++ is much better.
@@ -119,7 +119,7 @@ MAKE
 
 Each of these three directives tell that to make this file (`prog`) I need these files (`main.o`, `lib.o`) and will produce it by doing the following (`$(CC) -o prog main.o lib.o`).
 
-$(CC) is here a variable that should point to the default C compiler of the system. If it doesn't work you can run make like this
+`$(CC)` is here a variable that should point to the default C compiler of the system. If it doesn't work you can run make like this
 
     make CC=cc
 
