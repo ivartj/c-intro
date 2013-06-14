@@ -14,8 +14,9 @@ The C programming language is designed to be a low-level and
 performant programming language that is easily adapted to a variety of
 computer architectures (such as x86, x86-64, PowerPC, ARM and
 SPARC). It is used in the foundations of most modern software, such as
-operating systems and Java runtimes. It lacks many modern innovations
-such as a built-in object system and garbage collection.
+operating systems and programming language implementations. It lacks
+many modern innovations such as a built-in object system and garbage
+collection.
 
 The lack of garbage collection means that you manually allocate and
 free additional memory used by the process through functions. If a
@@ -77,7 +78,7 @@ BASIC COMPILING
 
 Given that you are in a directory with a `main.c` source file, and the name of the executable file for your compiler is `cc`, type
 
-   cc main.c
+    cc main.c
 
 and it should produce an `a.out` executable file on Unix, or maybe `a.exe` when on Windows [ ? ]. On Unix systems this file can be executed with
 
@@ -117,10 +118,55 @@ MAKE
     lib.o: lib.c
     	$(CC) -c lib.c
 
-Each of these three directives tell that to make this file (`prog`) I need these files (`main.o`, `lib.o`) and will produce it by doing the following (`$(CC) -o prog main.o lib.o`).
+Each of these three directives tell that to make this file (`prog`) I
+need these files (`main.o`, `lib.o`) and will produce it by doing the
+following (`$(CC) -o prog main.o lib.o`).
 
-`$(CC)` is here a variable that should point to the default C compiler of the system. If it doesn't work you can run make like this
+`$(CC)` is here a variable that should point to the default C compiler
+of the system. If it doesn't work you can run make like this
 
     make CC=cc
 
 where `cc` is the compiler you want to use.
+
+There is more Makefile syntax not covered here, but it is often not
+present in all `make` implementations. Other tools that automate
+compilation, such as Autotools and CMake, work by writing the Makefile
+for you. I will not cover either of these as their usage can be quite
+complicated, and `make` suffice for smaller projects.
+
+USING LIBRARIES
+---------------
+
+There are a great many libraries available to C, as major libraries are frequently written in C and have C as its primary interface. This includes
+
+ * SDL, Simple DirectMedia Layer, which is a cross-platform library
+   that provides an audio and window environment, among other
+   things. Used in many games.
+
+ * OpenGL, an API for hardware accelerated computer graphics. Among
+   the major implementations is Mesa 3D.
+
+ * SQLite, a widely used embedded database management system. It is
+   used to store information in Firefox and Google Chrome.
+
+In addition to installing and `#include`ing the header files of these libraries, you also need to tell the compiler things like in what directory it will find the header files (.h files) and the library files (typically named with a `lib` prefix and with extensions .a, .la, .so , .dll or .dylib).
+
+This is done through compiler flags, but they are generally not given manually. It does help to be familiar with the following however:
+
+-I tells the compiler an additional directory to search for header files. This is used when producing object files (.o files).
+
+The following two options is used when "linking", when producing an executable:
+
+-L tells the compiler an additional directory to search for library files.
+
+-l tells the compiler to link to a library in one of the library directories. For instance, to link to libSDL.la, that would be
+
+    -lSDL
+
+In Unix-style development environments, these flags are typically provided by a tool called `pkg-config`. For instance, on my Mac OS X system, I can do this:
+
+    $ pkg-config --cflags --libs sdl
+    -D_GNU_SOURCE=1 -D_THREAD_SAFE -I/opt/local/include/SDL -L/opt/local/lib -lSDLmain -Wl,-framework,AppKit -lSDL -Wl,-framework,Cocoa 
+
+`pkg-config`, or `pkgconf` which is an alternative I use on Windows, searches through .pc files installed with the libraries in which these flags are given.
