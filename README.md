@@ -164,9 +164,27 @@ The following two options is used when "linking", when producing an executable:
 
     -lSDL
 
-In Unix-style development environments, these flags are typically provided by a tool called `pkg-config`. For instance, on my Mac OS X system, I can do this:
+In Unix-style development environments, these flags are typically
+provided by a tool called `pkg-config`. For instance, on my Mac OS X
+system, I can do this:
 
     $ pkg-config --cflags --libs sdl
     -D_GNU_SOURCE=1 -D_THREAD_SAFE -I/opt/local/include/SDL -L/opt/local/lib -lSDLmain -Wl,-framework,AppKit -lSDL -Wl,-framework,Cocoa 
 
-`pkg-config`, or `pkgconf` which is an alternative I use on Windows, searches through .pc files installed with the libraries in which these flags are given.
+`pkg-config`, or `pkgconf` which is an alternative I use on Windows,
+searches through .pc files installed with the libraries in which these
+flags are given.
+
+In a GNU Makefile the output of `pkg-config` can be used like this:
+
+    CFLAGS=$(shell pkg-config --cflags sdl gl glu sqlite3)
+    LDFLAGS=$(shell pkg-config --libs sdl gl glu sqlite3)
+    
+    prog: main.o lib.o
+    	$(CC) -o prog main.o lib.o $(LDFLAGS)
+
+    main.o: main.c
+    	$(CC) $(CFLAGS) main.c
+    
+    lib.o: lib.c
+    	$(CC) $(CFLAGS) lib.c
