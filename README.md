@@ -164,8 +164,7 @@ The following two options is used when "linking", when producing an executable:
 
     -lSDL
 
-PKG-CONFIG
-----------
+### PKG-CONFIG
 
 In Unix-style development environments, these flags are typically
 provided by a tool called `pkg-config`. For instance, on my Mac OS X
