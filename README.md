@@ -154,13 +154,13 @@ In addition to installing and `#include`ing the header files of these libraries,
 
 This is done through compiler flags, but they are generally not given manually. It does help to be familiar with the following however:
 
--I tells the compiler an additional directory to search for header files. This is used when producing object files (.o files).
+`-I` tells the compiler an additional directory to search for header files. This is used when producing object files (.o files).
 
 The following two options is used when "linking", when producing an executable:
 
--L tells the compiler an additional directory to search for library files.
+`-L` tells the compiler an additional directory to search for library files.
 
--l tells the compiler to link to a library in one of the library directories. For instance, to link to libSDL.la, that would be
+`-l` tells the compiler to link to a library in one of the library directories. For instance, to link to libSDL.la, that would be
 
     -lSDL
 
