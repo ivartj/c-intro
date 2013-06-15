@@ -193,7 +193,7 @@ In a GNU Makefile the output of `pkg-config` can be used like this:
 
 ### SHARED LIBRARIES / DYNAMIC-LINK LIBRARIES (DLLs)
 
-If you attempt to run a program that uses a shared library, you will
+If you attempt to run a program that uses a shared library, you may
 encounter an error unless the library is in the environment's search paths for shared libraries. Statically linked libraries do not have this problem as all their necessary components are included in the executable upon linking.
 
 Here are the basics of search paths on major systems:
