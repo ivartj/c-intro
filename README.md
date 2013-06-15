@@ -196,10 +196,10 @@ In a GNU Makefile the output of `pkg-config` can be used like this:
 If you attempt to run a program that uses a shared library, you will
 encounter an error unless the library is in the environment's search paths for shared libraries. Statically linked libraries do not have this problem as all their necessary components are included in the executable upon linking.
 
-Here is the basics of search paths on major systems:
+Here are the basics of search paths on major systems:
 
-Windows searches the directory of the executable and the paths in the PATH environmental variable for DLL files.
+Windows searches the directory of the executable and the paths in the `PATH` environmental variable for DLL files.
 
-Linux systems searches standard directories for shared libraries, such as /usr/lib, and the paths in the LD_LIBRARY_PATH and LIBRARY_PATH environmental variables for .so files.
+Linux systems searches standard directories for shared libraries, such as `/usr/lib`, and the paths in the `LD_LIBRARY_PATH` environmental variable for .so files.
 
-Mac OS X searches the directory of the executable as well as the DYLD_LIBRARY_PATH environmental variable for .dylib files.
+Mac OS X searches the directory of the executable as well as the `DYLD_LIBRARY_PATH` environmental variable for .dylib files.
